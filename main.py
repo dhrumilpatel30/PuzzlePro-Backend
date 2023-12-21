@@ -1,4 +1,6 @@
+import cv2
 from fastapi import FastAPI
+from grid_recognition import grid_recognition
 
 app = FastAPI()
 
