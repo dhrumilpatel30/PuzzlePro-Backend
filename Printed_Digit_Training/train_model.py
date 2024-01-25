@@ -18,7 +18,7 @@ def normalize_image(current_image):
 
 def train_printed_digit_model(train_images, train_labels, number_of_classes):
     batch_size_value = 50
-    epochs_value = 20
+    epochs_value = 30
 
     train_images = np.array(list(map(normalize_image, train_images)))
 
@@ -26,14 +26,14 @@ def train_printed_digit_model(train_images, train_labels, number_of_classes):
 
     train_labels = to_categorical(train_labels, number_of_classes)
 
-    datagen = ImageDataGenerator(
-        rotation_range=10,
-        zoom_range=0.1,
-        width_shift_range=0.1,
-        height_shift_range=0.1,
-    )
-
-    datagen.fit(train_images)
+    # datagen = ImageDataGenerator(
+    #     rotation_range=10,
+    #     zoom_range=0.1,
+    #     width_shift_range=0.1,
+    #     height_shift_range=0.1,
+    # )
+    #
+    # datagen.fit(train_images)
 
     model = Sequential()
     model.add(Conv2D(filters=32, kernel_size=(5, 5), padding='Same',
