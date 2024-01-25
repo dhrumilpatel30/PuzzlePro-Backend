@@ -40,11 +40,11 @@ def find_sudoku_board(image, debug=False):
         cv2.waitKey(0)
 
     puzzle_image = four_point_transform(image, board_contours.reshape(4, 2))
-    warped_image = four_point_transform(gray_image, board_contours.reshape(4, 2))
+    threshed_image = four_point_transform(threshed_image, board_contours.reshape(4, 2))
     if debug:
         cv2.imshow("Puzzle Transform", puzzle_image)
         cv2.waitKey(0)
 
-    cv2.imwrite("./Generated/sudoku_test_image_board.jpg", warped_image)
+    cv2.imwrite("./Generated/sudoku_test_image_board.jpg", threshed_image)
 
-    return puzzle_image, warped_image
+    return puzzle_image, threshed_image
