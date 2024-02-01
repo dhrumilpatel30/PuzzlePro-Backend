@@ -1,8 +1,8 @@
-import cv2
-from keras.preprocessing.image import ImageDataGenerator
-import numpy as np
 import time
+
+import cv2
 import keras
+import numpy as np
 from keras import Sequential
 from keras.src.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
 from keras.src.optimizers import Adam

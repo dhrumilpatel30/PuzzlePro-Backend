@@ -1,6 +1,5 @@
 from Printed_Digit_Training.load_datasets import load_printed_digit_dataset
 from Printed_Digit_Training.test_model import test_printed_digit_model
-from Printed_Digit_Training.train_model import train_printed_digit_model
 
 
 def make_model():

@@ -1,10 +1,9 @@
 import cv2
-import imutils
 
 from Printed_Digit_Training.printed_digit_recognition import printed_digit_recognition_model, resize_to_28x28
 from Sudoku_Grid_Recognition.split_digits import split_digits
 
-current_image = cv2.imread("sudoku_test_image_4.jpg")
+current_image = cv2.imread("sudoku_test_image_5.jpeg")
 
 
 image_list = split_digits(current_image)

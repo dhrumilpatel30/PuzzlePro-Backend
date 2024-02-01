@@ -30,6 +30,7 @@ def test_printed_digit_model(test_images, test_labels, number_of_classes):
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
 
+    # noinspection PyUnresolvedReferences
     def plot_confusion_matrix(cm, classes,
                               normalize=False,
                               title='Confusion matrix',
