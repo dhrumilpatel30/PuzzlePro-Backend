@@ -7,7 +7,7 @@ import itertools
 
 
 def test_combined_digit_model(test_images, test_labels):
-    model = keras.models.load_model('../Models/combined_digits_model.keras')
+    model = keras.models.load_model('C:/Users/user1/digitmodel/PuzzlePro-Backend/Models/combined_digit_model.keras')
 
     start_time = time.time()
     predictions = model.predict(test_images)

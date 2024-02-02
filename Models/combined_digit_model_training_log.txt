@@ -1,0 +1,51 @@
+Training Log
+-------------
+
+Epoch	loss	accuracy	val_loss	val_accuracy	lr	
+________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d (Conv2D)             (None, 26, 26, 32)        320       
+                                                                 
+ conv2d_1 (Conv2D)           (None, 24, 24, 64)        18496     
+                                                                 
+ max_pooling2d (MaxPooling2  (None, 12, 12, 64)        0         
+ D)                                                              
+                                                                 
+ batch_normalization (Batch  (None, 12, 12, 64)        256       
+ Normalization)                                                  
+                                                                 
+ conv2d_2 (Conv2D)           (None, 10, 10, 128)       73856     
+                                                                 
+ conv2d_3 (Conv2D)           (None, 8, 8, 128)         147584    
+                                                                 
+ max_pooling2d_1 (MaxPoolin  (None, 4, 4, 128)         0         
+ g2D)                                                            
+                                                                 
+ batch_normalization_1 (Bat  (None, 4, 4, 128)         512       
+ chNormalization)                                                
+                                                                 
+ flatten (Flatten)           (None, 2048)              0         
+                                                                 
+ dense (Dense)               (None, 512)               1049088   
+                                                                 
+ dense_1 (Dense)             (None, 19)                9747      
+                                                                 
+=================================================================
+Total params: 1299859 (4.96 MB)
+Trainable params: 1299475 (4.96 MB)
+Non-trainable params: 384 (1.50 KB)
+_________________________________________________________________
+---Training time 2766.0290262699127 seconds ---
+
+
+Training History:
+
+
+Additional Details:
+Batch Size: 50
+Epochs: 100
+Input Shape: (28, 28, 1)
+Number of Classes: 19
+Training log saved at: ../Models\combined_digit_model_training_log.txt
+Model saved at: C:/Users/user1/digitmodel/PuzzlePro-Backend/Models/combined_digit_model.keras

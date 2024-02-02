@@ -18,7 +18,7 @@ def normalize_image(current_image):
 
 def train_printed_digit_model(train_images, train_labels, number_of_classes):
     batch_size_value = 50
-    epochs_value = 30
+    epochs_value = 50
 
     train_images = np.array(list(map(normalize_image, train_images)))
 
