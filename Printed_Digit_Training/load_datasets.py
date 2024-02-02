@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 
 def load_printed_digit_dataset():
-    path = '../Datasets/Digits'
+    path = 'C:/Users/user1/digitmodel/PuzzlePro-Backend/Datasets/Digits'
     train_size, test_size = 0.80, 0.20
 
     all_images = []

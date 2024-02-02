@@ -1,6 +1,6 @@
-from Combined_Digit_Recognition.test_combined_model import test_combined_digit_model
-from Combined_Digit_Recognition.train_combined_model import train_combined_digit_model
-from Combined_Digit_Recognition.load_combined_datasets import load_combined_datasets
+from test_combined_model import test_combined_digit_model
+from train_combined_model import train_combined_digit_model
+from load_combined_datasets import load_combined_datasets
 
 
 def make_combined_model():

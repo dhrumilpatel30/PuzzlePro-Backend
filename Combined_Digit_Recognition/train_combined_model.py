@@ -1,32 +1,36 @@
 import os
 import time
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.callbacks import ReduceLROnPlateau
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from keras.optimizers import Adam
+from keras.preprocessing.image import ImageDataGenerator
+from keras.callbacks import ReduceLROnPlateau
+from keras.layers import BatchNormalization
 
 
 def custom_print(*args, file=None, flush=False):
     print(*args, flush=flush)
 
-    if file is not None:
-        with open(file, 'a') as log_file:
-            print(*args, file=log_file, flush=flush)
+    with open("C:/Users/user1/digitmodel/PuzzlePro-Backend/Models/combined_digit_model_training_log.txt", 'a') as log_file:
+        print(*args, file=log_file, flush=flush)
 
 
 def create_model(input_shape, number_of_classes):
     model = Sequential()
-    model.add(Conv2D(32, (3, 3), activation='relu', input_shape=input_shape))
-    model.add(MaxPooling2D((2, 2)))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2)))
-    model.add(Conv2D(128, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2)))
+    model.add(Conv2D(filters=32, kernel_size = (3,3), activation="relu", input_shape=input_shape))
+    model.add(Conv2D(filters=64, kernel_size = (3,3), activation="relu"))
+    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(BatchNormalization())
+
+    model.add(Conv2D(filters=128, kernel_size = (3,3), activation="relu"))
+    model.add(Conv2D(filters=128, kernel_size = (3,3), activation="relu"))
+    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(BatchNormalization())    
+
     model.add(Flatten())
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(number_of_classes, activation='softmax'))
+    model.add(Dense(512,activation="relu"))
+        
+    model.add(Dense(number_of_classes,activation="softmax"))
 
     model.compile(optimizer=Adam(learning_rate=0.001),
                   loss='categorical_crossentropy',
@@ -37,7 +41,7 @@ def create_model(input_shape, number_of_classes):
 
 def train_combined_digit_model(train_images, test_images, train_labels, test_labels, number_of_classes):
     batch_size = 50
-    epochs = 50
+    epochs = 100
 
     input_shape = train_images.shape[1:]
     model = create_model(input_shape, number_of_classes)
@@ -48,7 +52,7 @@ def train_combined_digit_model(train_images, test_images, train_labels, test_lab
 
     log_file_path = os.path.join(save_dir, 'combined_digit_model_training_log.txt')
 
-    with open(log_file_path, 'w') as log_file:
+    with open("C:/Users/user1/digitmodel/PuzzlePro-Backend/Models/combined_digit_model_training_log.txt", 'w') as log_file:
         log_file.write("Training Log\n")
         log_file.write("-------------\n\n")
 
@@ -81,12 +85,6 @@ def train_combined_digit_model(train_images, test_images, train_labels, test_lab
             log_file.write(f"{key}\t")
         log_file.write("\n")
 
-        for epoch in range(epochs):
-            custom_print(f"\nEpoch {epoch + 1}/{epochs}", file=log_file, flush=True)
-            for step, (x_batch, y_batch) in enumerate(datagen.flow(train_images, train_labels, batch_size=batch_size)):
-                model.train_on_batch(x_batch, y_batch)
-                custom_print(f"\rTraining: Step {step + 1}/{len(train_images) // batch_size}")
-
         custom_print("\n\nAdditional Details:", file=log_file)
         custom_print(f"Batch Size: {batch_size}", file=log_file)
         custom_print(f"Epochs: {epochs}", file=log_file)
@@ -95,5 +93,5 @@ def train_combined_digit_model(train_images, test_images, train_labels, test_lab
 
     custom_print("Training log saved at:", log_file_path)
 
-    model.save(os.path.join(save_dir, 'combined_digit_model.keras'))
-    custom_print("Model saved at:", os.path.join(save_dir, 'combined_digit_model.keras'))
+    model.save('C:/Users/user1/digitmodel/PuzzlePro-Backend/Models/combined_digit_model.keras')
+    custom_print("Model saved at:", 'C:/Users/user1/digitmodel/PuzzlePro-Backend/Models/combined_digit_model.keras')
