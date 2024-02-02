@@ -1,6 +1,5 @@
 import json
 import secrets
-
 import keras.models
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
@@ -9,8 +8,7 @@ import base64
 from PIL import Image
 import numpy as np
 from pydantic import BaseModel
-
-from recogniser import recognise_sudoku
+from recogniser import recognise_sudoku, recognise_mixed_sudoku
 
 app = FastAPI()
 security = HTTPBasic()
@@ -19,7 +17,8 @@ USERNAME = 'puzzleProAdmin'
 PASSWORD = "willBeChangedOnDeployment"
 
 digit_recognition_model = keras.models.load_model('Models/printed_digits_model.keras')
-# mixed_digit_recognition_model =
+# mixed_digit_recognition_model = keras.models.load_model('Models/combined_digit_model.keras')
+mixed_digit_recognition_model = keras.models.load_model('Models/printed_digits_model.keras')
 
 
 def base64_to_img(base64_data):
@@ -41,9 +40,9 @@ def image_to_matrix(image):
     return sudoku_matrix
 
 
-# def image_to_matrix_mixed(image):
-#     sudoku_matrix = recognise_sudoku(image, )
-#     return sudoku_matrix
+def image_to_matrix_mixed(image):
+    sudoku_matrix = recognise_mixed_sudoku(image, mixed_digit_recognition_model)
+    return sudoku_matrix
 
 
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
@@ -70,6 +69,7 @@ async def root():
 @app.post("/generate-sudoku-matrix")
 async def add_image_to_matrix(item: Item, authenticated: bool = Depends(authenticate)):
     try:
+        print(authenticated)
         image = base64_to_img(item.base64_image)
         matrix = image_to_matrix(image)
         matrix_list = np.array(matrix, dtype=np.int64).tolist()
@@ -78,12 +78,13 @@ async def add_image_to_matrix(item: Item, authenticated: bool = Depends(authenti
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# @app.post("/generate-sudoku-matrix-for-mixed")
-# async def add_image_to_matrix(item: Item, authenticated: bool = Depends(authenticate)):
-#     try:
-#         image = base64_to_img(item.base64_image)
-#         matrix = image_to_matrix_mixed(image)
-#         matrix_list = np.array(matrix, dtype=np.int64).tolist()
-#         return {"matrix": json.dumps(matrix_list)}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+@app.post("/generate-sudoku-matrix-for-mixed")
+async def add_image_to_matrix(item: Item, authenticated: bool = Depends(authenticate)):
+    try:
+        print(authenticated)
+        image = base64_to_img(item.base64_image)
+        matrix = image_to_matrix_mixed(image)
+        matrix_list = np.array(matrix, dtype=np.int64).tolist()
+        return {"matrix": json.dumps(matrix_list)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
