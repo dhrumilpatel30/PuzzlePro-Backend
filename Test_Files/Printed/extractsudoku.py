@@ -13,7 +13,7 @@ image_list = split_digits(current_image1)
 # current_image4 = cv2.imread("sudoku_test_image_7.jpeg")
 # image_list = split_digits(current_image4)
 
-digit_recognition_model = keras.models.load_model('../Models/printed_digits_model.keras')
+digit_recognition_model = keras.models.load_model('../../Models/printed_digits_model.keras')
 
 sudoku_matrix = [[0 for _ in range(9)] for _ in range(9)]
 for row_index in range(len(image_list)):

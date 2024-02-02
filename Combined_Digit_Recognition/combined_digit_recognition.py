@@ -32,11 +32,14 @@ def resize_to_28x28(image):
     return out_img
 
 
-def printed_digit_recognition_model(digit_image, printed_digit_model):
+def combined_digit_recognition(digit_image, combined):
     start_time = time.time()
-    predictions = printed_digit_model.predict(digit_image)
+    predictions = combined.predict(digit_image)
     predicted_digit = np.argmax(predictions)
     print("---Took time %s seconds ---" % (time.time() - start_time))
     print(predicted_digit)
     print(predictions)
-    return predicted_digit
+    if predicted_digit > 9:
+        return predicted_digit - 9, "Handwritten"
+    else:
+        return predicted_digit, "Printed"

@@ -1,6 +1,4 @@
 import os
-import cv2
-import numpy as np
 from sklearn.model_selection import train_test_split
 from keras.datasets import mnist
 import cv2
@@ -15,7 +13,7 @@ def normalize_image(current_image):
 
 
 def load_combined_datasets():
-    path = 'C:/Users/user1/digitmodel/PuzzlePro-Backend/Datasets/Digits'
+    path = '../Datasets/Digits'
     train_size, test_size = 0.80, 0.20
 
     all_images = []
@@ -45,7 +43,6 @@ def load_combined_datasets():
         train_test_split(all_images, class_number,
                          train_size=train_size, test_size=test_size, random_state=30))
 
-
     printed_train_images = np.array(list(map(normalize_image, printed_train_images)))
     printed_test_images = np.array(list(map(normalize_image, printed_test_images)))
 
@@ -57,8 +54,6 @@ def load_combined_datasets():
     mnist_train_labels = mnist_train_labels[mnist_mask_train]
     mnist_test_images = mnist_test_images[mnist_mask_test]
     mnist_test_labels = mnist_test_labels[mnist_mask_test]
-    
-    
 
     # Combining printed digits dataset with MNIST training and test sets
     combined_images_train = np.concatenate((printed_train_images, mnist_train_images))
@@ -68,7 +63,6 @@ def load_combined_datasets():
 
     combined_labels_encoded_train = to_categorical(combined_labels_train, num_classes=19)
     combined_labels_encoded_test = to_categorical(combined_labels_test, num_classes=19)
-
 
     combined_images_train = (
         combined_images_train.reshape(combined_images_train.shape[0], combined_images_train.shape[1],
