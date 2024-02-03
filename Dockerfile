@@ -1,10 +1,10 @@
-FROM python:3.10
+FROM python:3.11
 
 WORKDIR /data
 COPY . /data
 
 RUN pip install -r requirements.txt
-RUN pip install opencv-python
+RUN pip install opencv-python-headless
 
 COPY . .
 
