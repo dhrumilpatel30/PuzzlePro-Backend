@@ -22,15 +22,15 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://puzzlepro.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_3c82fafb121b42a295613cc543384b87 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_9577ed25af1f4e3ebef8e3b1a66e7af6 }}
+        registry: https://index.docker.io/v1/
+        username: ${{ secrets.AzureAppService_ContainerUsername_5b2b3283397e431db137538b6354d4cc }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_eaa2e4bb2d2a4f31be3fcac47f99cf42 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: puzzlepro.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_3c82fafb121b42a295613cc543384b87 }}/puzzlepro:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_5b2b3283397e431db137538b6354d4cc }}/dhrumilpatel30/puzzlepro:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'puzzlepro'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f281622a06f548238349ff766c1147e3 }}
-        images: 'puzzlepro.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_3c82fafb121b42a295613cc543384b87 }}/puzzlepro:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_83d605f97b414934ad3fe1cc3e0a483b }}
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_5b2b3283397e431db137538b6354d4cc }}/dhrumilpatel30/puzzlepro:${{ github.sha }}'
