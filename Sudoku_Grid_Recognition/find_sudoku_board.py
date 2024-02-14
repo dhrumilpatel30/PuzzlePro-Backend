@@ -3,19 +3,13 @@ import imutils
 import cv2
 
 
-def find_sudoku_board(image, debug=False):
+def find_sudoku_board(image):
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred_image = cv2.GaussianBlur(gray_image, (11, 11), 0)
-
     threshed_image = cv2.adaptiveThreshold(blurred_image, 255,
                                            cv2.ADAPTIVE_THRESH_MEAN_C | cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                            cv2.THRESH_BINARY, 5, 2)
     threshed_image = cv2.bitwise_not(threshed_image)
-
-    if debug:
-        cv2.imshow("Puzzle Thresh", threshed_image)
-        cv2.waitKey(0)
-
     contours_list = cv2.findContours(threshed_image.copy(), cv2.RETR_EXTERNAL,
                                      cv2.CHAIN_APPROX_SIMPLE)
     contours_list = imutils.grab_contours(contours_list)
@@ -34,18 +28,6 @@ def find_sudoku_board(image, debug=False):
     if board_contours is None:
         raise Exception("Could not found any image")
 
-    if debug:
-        output = image.copy()
-        cv2.drawContours(output, [board_contours], -1, (0, 255, 0), 2)
-        cv2.imshow("Puzzle Outline", output)
-        cv2.waitKey(0)
-
     puzzle_image = four_point_transform(image, board_contours.reshape(4, 2))
     threshed_image = four_point_transform(threshed_image, board_contours.reshape(4, 2))
-    if debug:
-        cv2.imshow("Puzzle Transform", puzzle_image)
-        cv2.waitKey(0)
-
-    cv2.imwrite("./Generated/sudoku_test_image_board.jpg", threshed_image)
-
     return puzzle_image, threshed_image

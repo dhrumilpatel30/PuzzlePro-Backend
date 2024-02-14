@@ -1,8 +1,8 @@
 from Sudoku_Grid_Recognition.find_sudoku_board import find_sudoku_board
 
 
-def split_digits(image, debug=False):
-    puzzle_image, warped_image = find_sudoku_board(image, debug=debug)
+def split_digits(image):
+    puzzle_image, warped_image = find_sudoku_board(image)
 
     number_of_rows = 9
     number_of_cols = 9
