@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_acabae56f704419daeb8391f92879f3d }}/dhrumilpatel30/puzzlepro-release:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_acabae56f704419daeb8391f92879f3d }}/puzzlepro-release:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'puzzlepro'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_c8b067371ac34c9f8b3679b73a288981 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_acabae56f704419daeb8391f92879f3d }}/dhrumilpatel30/puzzlepro-release:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_acabae56f704419daeb8391f92879f3d }}/puzzlepro-release:${{ github.sha }}'
