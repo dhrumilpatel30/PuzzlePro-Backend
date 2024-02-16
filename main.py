@@ -17,8 +17,7 @@ USERNAME = 'puzzleProAdmin'
 PASSWORD = "willBeChangedOnDeployment"
 
 digit_recognition_model = keras.models.load_model('Models/printed_digits_model.keras')
-# mixed_digit_recognition_model = keras.models.load_model('Models/combined_digit_model.keras')
-mixed_digit_recognition_model = keras.models.load_model('Models/printed_digits_model.keras')
+mixed_digit_recognition_model = keras.models.load_model('Models/combined_digit_model.keras')
 
 
 def base64_to_img(base64_data):
@@ -79,7 +78,7 @@ async def add_image_to_matrix(item: Item, authenticated: bool = Depends(authenti
 
 
 @app.post("/generate-sudoku-matrix-for-mixed")
-async def add_image_to_matrix(item: Item, authenticated: bool = Depends(authenticate)):
+async def add_image_to_matrix_combined(item: Item, authenticated: bool = Depends(authenticate)):
     try:
         print(authenticated)
         image = base64_to_img(item.base64_image)

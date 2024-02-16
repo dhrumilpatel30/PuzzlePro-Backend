@@ -39,7 +39,4 @@ def combined_digit_recognition(digit_image, combined):
     print("---Took time %s seconds ---" % (time.time() - start_time))
     print(predicted_digit)
     print(predictions)
-    if predicted_digit > 9:
-        return predicted_digit - 9, "Handwritten"
-    else:
-        return predicted_digit, "Printed"
+    return predicted_digit

@@ -1,15 +1,17 @@
 from imutils.perspective import four_point_transform
 import imutils
 import cv2
+import numpy as np
 
 
 def find_sudoku_board(image):
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    blurred_image = cv2.GaussianBlur(gray_image, (11, 11), 0)
-    threshed_image = cv2.adaptiveThreshold(blurred_image, 255,
-                                           cv2.ADAPTIVE_THRESH_MEAN_C | cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                                           cv2.THRESH_BINARY, 5, 2)
-    threshed_image = cv2.bitwise_not(threshed_image)
+    image = cv2.fastNlMeansDenoisingColored(image, None, 10, 10, 7, 15)
+    kernel = np.ones((3, 3), np.uint8)
+    image = cv2.erode(image, kernel, iterations=1)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    image = cv2.dilate(image, kernel)
+    threshed_image = cv2.bitwise_not(image)
     contours_list = cv2.findContours(threshed_image.copy(), cv2.RETR_EXTERNAL,
                                      cv2.CHAIN_APPROX_SIMPLE)
     contours_list = imutils.grab_contours(contours_list)

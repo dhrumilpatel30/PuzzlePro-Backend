@@ -9,22 +9,9 @@ current_image1 = cv2.imread("sudoku_test_image_1.jpg")
 # image_list = split_digits(current_image2)
 # current_image4 = cv2.imread("sudoku_test_image_7.jpeg")
 # image_list = split_digits(current_image4)
-dummy_model = keras.models.load_model('../../Models/combined_digit_model.keras', compile=False)
+digit_recognition_model = keras.models.load_model('../../Models/combined_digit_model.keras')
 
-# Print the summary of the model
-dummy_model.summary()
-
-# Alternatively, you can print the layers
-for layer in dummy_model.layers:
-    print(layer.name, layer.input_shape, layer.output_shape)
-
-# You can also check the layer names and types
-for layer in dummy_model.layers:
-    print(layer.name, layer.__class__.__name__)
-
-# If you need more detailed information about a specific layer, you can print its configuration
-for layer in dummy_model.layers:
-    print(layer.get_config())
+# digit_recognition_model.summary()
 
 
 def recognise_mixed_sudoku(image, mixed_digit_recognition_model):
@@ -43,4 +30,4 @@ def recognise_mixed_sudoku(image, mixed_digit_recognition_model):
     return sudoku_matrix
 
 
-# print(recognise_mixed_sudoku(current_image1, digit_recognition_model))
+print(recognise_mixed_sudoku(current_image1, digit_recognition_model))
